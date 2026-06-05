@@ -4,7 +4,9 @@ from database.database import engine
 from fastapi import Depends
 from security import get_current_user
 from routers import register, login, campaigns, characters, items, inventory, effects
-
+from slowapi import _rate_limit_exceeded_handler
+from slowapi.errors import RateLimitExceeded
+from security import limiter # Імпортуємо наш лімітер
 models.Base.metadata.create_all(bind=engine)
 app = FastAPI(
     title = "DnD API",
@@ -12,6 +14,9 @@ app = FastAPI(
     version="1.0",
     root_path= "/api/v1.0",
 )
+
+app.state.limiter = limiter
+app.add_exception_handler(RateLimitExceeded, _rate_limit_exceeded_handler)
 
 app.include_router(register.router, tags=["Authentication"])
 app.include_router(login.router, tags=["Login"])

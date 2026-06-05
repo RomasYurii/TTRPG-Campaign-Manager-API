@@ -1,13 +1,14 @@
-from fastapi import APIRouter, HTTPException, status, Depends
+from fastapi import APIRouter, HTTPException, status, Depends, Request
 from database.database import get_db, Session
 from database import models
-from security import create_access_token, verify_password
 from fastapi.security import OAuth2PasswordRequestForm
+from security import verify_password, create_access_token, limiter
 router = APIRouter()
 
 
 @router.post("/login")
-def login(form_data: OAuth2PasswordRequestForm = Depends(), db: Session = Depends(get_db)):
+@limiter.limit("5/minute")
+def login(request: Request, form_data: OAuth2PasswordRequestForm = Depends(), db: Session = Depends(get_db)):
     user = db.query(models.User).filter(models.User.username == form_data.username).first()
 
     if not user or not verify_password(form_data.password, user.hashed_password):

@@ -8,6 +8,11 @@ import jwt
 from database.database import get_db
 from database.models import User
 
+from slowapi import Limiter
+from slowapi.util import get_remote_address
+
+limiter = Limiter(key_func=get_remote_address)
+
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="login")
 
 
