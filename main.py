@@ -3,7 +3,7 @@ from database import models
 from database.database import engine
 from fastapi import Depends
 from security import get_current_user
-from routers import register, login, campaigns, characters, items, inventory
+from routers import register, login, campaigns, characters, items, inventory, effects
 
 models.Base.metadata.create_all(bind=engine)
 app = FastAPI(
@@ -19,7 +19,7 @@ app.include_router(campaigns.router, tags=["Campaigns"])
 app.include_router(characters.router, tags=["Characters"])
 app.include_router(items.router, tags=["Items"])
 app.include_router(inventory.router, tags=["Inventory"])
-
+app.include_router(effects.router, tags=["Effects"])
 
 @app.get("/users/me")
 def read_users_me(current_user: models.User = Depends(get_current_user)):

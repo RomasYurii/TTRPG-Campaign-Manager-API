@@ -27,6 +27,8 @@ class ItemResponse(BaseModel):
     class Config:
         from_attributes = True
 
+class EffectAdd(BaseModel):
+    effect_id: int
 
 class InventoryAdd(BaseModel):
     item_id: int
