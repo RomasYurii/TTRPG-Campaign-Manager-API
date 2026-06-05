@@ -1,9 +1,9 @@
 import pytest
 from fastapi.testclient import TestClient
 from main import app
-from database.database import SessionLocal  # Підключи свою сесію БД
-from database.models import User  # Підключи модель
-from security import get_password_hash  # Підключи функцію хешування
+from database.database import Session
+from database.models import User
+from security import get_password_hash
 
 
 @pytest.fixture
@@ -13,7 +13,7 @@ def client():
 
 def test_login_success(client):
     # --- 1. ПІДГОТОВКА ДАНИХ (Arrange) ---
-    db = SessionLocal()
+    db = Session()
     # Перевіряємо, чи користувач вже є (щоб тест не падав при повторному запуску)
     user = db.query(User).filter(User.username == "testuser").first()
     if not user:
