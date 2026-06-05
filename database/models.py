@@ -67,3 +67,31 @@ class StatusEffect(Base):
     description_uk = Column(Text, nullable=True)
 
     is_positive = Column(Integer, default=0)  # 1 для бафів, 0 для дебафів/хвороб
+
+
+class InventoryItem(Base):
+    __tablename__ = "inventory_items"
+
+    # Складений первинний ключ (один персонаж не може мати два РІЗНИХ записи для одного й того ж предмета,
+    # замість цього ми збільшуватимемо quantity)
+    character_id = Column(Integer, ForeignKey("characters.id"), primary_key=True)
+    item_id = Column(Integer, ForeignKey("items.id"), primary_key=True)
+
+    quantity = Column(Integer, default=1)
+
+    # Зв'язки
+    character = relationship("Character", backref="inventory")
+    item = relationship("Item")
+
+
+# Додай до інших моделей у models.py
+
+class CharacterEffect(Base):
+    __tablename__ = "character_effects"
+
+    character_id = Column(Integer, ForeignKey("characters.id"), primary_key=True)
+    effect_id = Column(Integer, ForeignKey("status_effects.id"), primary_key=True)
+
+    # Зв'язки
+    character = relationship("Character", backref="active_effects")
+    effect = relationship("StatusEffect")

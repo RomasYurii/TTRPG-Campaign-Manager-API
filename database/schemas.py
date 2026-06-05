@@ -26,3 +26,8 @@ class ItemResponse(BaseModel):
 
     class Config:
         from_attributes = True
+
+
+class InventoryAdd(BaseModel):
+    item_id: int
+    quantity: int = 1
