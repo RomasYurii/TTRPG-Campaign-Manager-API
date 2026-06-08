@@ -1,5 +1,5 @@
-# CyberSecurity Audit Manager API 
-Async REST API for managing pentest targets, vulnerabilities, and reports.
+# TTRPG Campaign Manager API 🎲
+Async REST API for managing D&D campaigns, characters, and inventory.
 
 **Tech:** Python, FastAPI, PostgreSQL, SQLAlchemy, Alembic, Docker, JWT.
 
