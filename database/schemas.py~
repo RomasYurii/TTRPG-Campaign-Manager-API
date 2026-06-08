@@ -1,0 +1,35 @@
+from pydantic import BaseModel, EmailStr
+from typing import Optional
+
+class UserCreate(BaseModel):
+    username: str
+    email: str
+    password: str
+    role: str = "player"
+
+class CampaignCreate(BaseModel):
+    title: str
+    description: Optional[str] = None
+
+class CharacterCreate(BaseModel):
+    name: str
+    race: str
+    char_class: str
+    campaign_id: int
+
+class ItemResponse(BaseModel):
+    id: int
+    name: str
+    description: Optional[str]
+    rarity: str
+    price: int
+
+    class Config:
+        from_attributes = True
+
+class EffectAdd(BaseModel):
+    
+
+class InventoryAdd(BaseModel):
+    item_id: int
+    quantity: int = 1

@@ -1,0 +1,7 @@
+from pydantic import BaseModel, EmailStr
+
+class UserCreate(BaseModel):
+    username: str
+    email: str
+    password: str
+    role: str = "player" # за замовчуванням гравець
